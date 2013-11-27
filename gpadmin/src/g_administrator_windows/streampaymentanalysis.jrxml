@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="streampaymentanalysis" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7b0b2cd8-a386-41c6-aeca-bd0f057050e1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="term" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="class" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stream" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     feesinstallments.`key` AS feesinstallments_key,
+     feesinstallments.`transactionid` AS feesinstallments_transactionid,
+     feespayment.`key` AS feespayment_key,
+     feespayment.`year` AS feespayment_year,
+     feespayment.`term` AS feespayment_term,
+     feespayment.`studentadm` AS feespayment_studentadm,
+     student.`studentnumber` AS student_studentnumber,
+     student.`stream` AS student_stream,
+     student.`cclass` AS student_cclass,
+     student.`religion` AS student_religion,
+     sum( installmentbreakdown.`amount`) AS installmentbreakdown_amount,
+     installmentbreakdown.`item` AS installmentbreakdown_item,
+     installmentbreakdown.`transactionid` AS installmentbreakdown_transactionid,
+     installmentbreakdown.`key` AS installmentbreakdown_key,
+     school.`address` AS school_address,
+     school.`location` AS school_location,
+     school.`sname` AS school_sname
+FROM
+     `feesinstallments` feesinstallments INNER JOIN `installmentbreakdown` installmentbreakdown ON feesinstallments.`transactionid` = installmentbreakdown.`transactionid`
+     INNER JOIN `feespayment` feespayment ON feesinstallments.`key` = feespayment.`key`
+     INNER JOIN `student` student ON feespayment.`studentadm` = student.`studentnumber`,
+     `school` school
+where
+ student.`cclass`=$P{class}
+and  student.`stream`=$P{stream}
+and  feespayment.`year`=$P{year}
+and  feespayment.`term`=$P{term}
+group by
+ installmentbreakdown.`item`]]>
+	</queryString>
+	<field name="feesinstallments_key" class="java.lang.String"/>
+	<field name="feesinstallments_transactionid" class="java.lang.String"/>
+	<field name="feespayment_key" class="java.lang.String"/>
+	<field name="feespayment_year" class="java.lang.Integer"/>
+	<field name="feespayment_term" class="java.lang.Integer"/>
+	<field name="feespayment_studentadm" class="java.lang.Integer"/>
+	<field name="student_studentnumber" class="java.lang.Integer"/>
+	<field name="student_stream" class="java.lang.String"/>
+	<field name="student_cclass" class="java.lang.Integer"/>
+	<field name="student_religion" class="java.lang.String"/>
+	<field name="installmentbreakdown_amount" class="java.math.BigDecimal"/>
+	<field name="installmentbreakdown_item" class="java.lang.String"/>
+	<field name="installmentbreakdown_transactionid" class="java.lang.String"/>
+	<field name="installmentbreakdown_key" class="java.lang.String"/>
+	<field name="school_address" class="java.lang.String"/>
+	<field name="school_location" class="java.lang.String"/>
+	<field name="school_sname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9962155b-37bd-4119-8573-02681f9dabd6" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_sname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2bcc093c-649d-43a9-bbd6-495c6a84a4dc" x="0" y="20" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fees Payment Analysis For Class "+$F{student_cclass}+" "+$F{student_stream}+"Term "+$F{feespayment_term}+" "+$F{feespayment_year}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="26392787-b48e-4cb3-8833-edc5ad53dd1d" x="55" y="2" width="189" height="20"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installmentbreakdown_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c5298d91-b6f8-4c2d-b3fb-b28dec75350d" x="268" y="2" width="180" height="20"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installmentbreakdown_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch"/>
+	</summary>
+</jasperReport>

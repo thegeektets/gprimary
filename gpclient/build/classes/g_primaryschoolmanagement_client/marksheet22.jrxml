@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="marksheet22" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a85eec05-e0de-41e6-9d23-729c5d1e34bf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="type" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="class" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="term" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     exam.`examtype` AS exam_examtype,
+     exam.`class` AS exam_class,
+     exam.`stream` AS exam_stream,
+     exam.`term` AS exam_term,
+     exam.`yearofadm` AS exam_yearofadm,
+     exam.`examno` AS exam_examno,
+     exam.`entry` AS exam_entry,
+     student.`studentnumber` AS student_studentnumber,
+     student.`studentname` AS student_studentname,
+     student.`sex` AS student_sex,
+     student.`stream` AS student_stream,
+     student.`House` AS student_House,
+     student.`DOA` AS student_DOA,
+     student.`Class` AS student_Class,
+     student.`ParentsId` AS student_ParentsId,
+     student.`Bcertnumber` AS student_Bcertnumber,
+     student.`spic` AS student_spic,
+     student.`sport` AS student_sport,
+     student.`kcpe` AS student_kcpe,
+     student.`club` AS student_club,
+     student.`society` AS student_society,
+     student.`family` AS student_family,
+     student.`cclass` AS student_cclass,
+     student.`religion` AS student_religion,
+     student.`dob` AS student_dob,
+     score.`admno` AS score_admno,
+     score.`examno` AS score_examno,
+     score.`math` AS score_math,
+     score.`insha` AS score_insha,
+     score.`lugha` AS score_lugha,
+     score.`kiswa` AS score_kiswa,
+     score.`comp` AS score_comp,
+     score.`grammer` AS score_grammer,
+     score.`eng` AS score_eng,
+     score.`science` AS score_science,
+     score.`re` AS score_re,
+     score.`social` AS score_social,
+     score.`socialstudies` AS score_socialstudies,
+(if(score.`kiswa`!=0,score.`kiswa`,0)+if(score.`math`!=0,score.`math`,0)+if(score.`eng`!=0,score.`eng`,0)+if(score.`science`!=0,score.`science`,0)+if(score.`socialstudies`!=0,score.`socialstudies`,0)) as total
+
+
+FROM
+     `student` student INNER JOIN `score` score ON student.`studentnumber` = score.`admno`
+     INNER JOIN `exam` exam ON score.`examno` = exam.`examno`
+where
+exam.`yearofadm`=$P{year}
+and exam.`examtype`=$P{type}
+and exam.`class`=$P{class}
+and exam.`term`=$P{term}
+order by
+total DESC]]>
+	</queryString>
+	<field name="exam_examtype" class="java.lang.String"/>
+	<field name="exam_class" class="java.lang.Integer"/>
+	<field name="exam_stream" class="java.lang.String"/>
+	<field name="exam_term" class="java.lang.Integer"/>
+	<field name="exam_yearofadm" class="java.lang.Integer"/>
+	<field name="exam_examno" class="java.lang.String"/>
+	<field name="exam_entry" class="java.lang.Integer"/>
+	<field name="student_studentnumber" class="java.lang.Integer"/>
+	<field name="student_studentname" class="java.lang.String"/>
+	<field name="student_sex" class="java.lang.String"/>
+	<field name="student_stream" class="java.lang.String"/>
+	<field name="student_House" class="java.lang.String"/>
+	<field name="student_DOA" class="java.sql.Date"/>
+	<field name="student_Class" class="java.lang.Long"/>
+	<field name="student_ParentsId" class="java.lang.Integer"/>
+	<field name="student_Bcertnumber" class="java.lang.Integer"/>
+	<field name="student_spic" class="java.lang.String"/>
+	<field name="student_sport" class="java.lang.String"/>
+	<field name="student_kcpe" class="java.lang.String"/>
+	<field name="student_club" class="java.lang.String"/>
+	<field name="student_society" class="java.lang.String"/>
+	<field name="student_family" class="java.lang.String"/>
+	<field name="student_cclass" class="java.lang.Integer"/>
+	<field name="student_religion" class="java.lang.String"/>
+	<field name="student_dob" class="java.sql.Date"/>
+	<field name="score_admno" class="java.lang.Integer"/>
+	<field name="score_examno" class="java.lang.String"/>
+	<field name="score_math" class="java.lang.Integer"/>
+	<field name="score_insha" class="java.lang.Integer"/>
+	<field name="score_lugha" class="java.lang.Integer"/>
+	<field name="score_kiswa" class="java.lang.Integer"/>
+	<field name="score_comp" class="java.lang.Integer"/>
+	<field name="score_grammer" class="java.lang.Integer"/>
+	<field name="score_eng" class="java.lang.Integer"/>
+	<field name="score_science" class="java.lang.Integer"/>
+	<field name="score_re" class="java.lang.Integer"/>
+	<field name="score_social" class="java.lang.Integer"/>
+	<field name="score_socialstudies" class="java.lang.Integer"/>
+	<field name="total" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4ccccd50-8d1e-4b1c-b053-9f7c95740871" x="0" y="8" width="555" height="27"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Class "+ $F{exam_class}+" Term "+$F{exam_term}+" "+ $F{exam_yearofadm}+" "+$F{exam_examtype}+" Results Marksheet"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="43120e7b-8834-4464-853b-939cfd3a814f" x="440" y="-5" width="115" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e035a3c9-237e-41d1-b801-c0f3ea5f51a0" mode="Transparent" x="205" y="0" width="40" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Kis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f122ce62-3d79-4057-b99e-a5dc9ca0dd21" x="0" y="0" width="47" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Admno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fcf01ab1-a040-4998-9d41-1f968cd41c98" mode="Transparent" x="292" y="0" width="64" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Science]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="68893c29-5faa-42e6-942a-7a9ea5d98f72" x="433" y="0" width="78" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8ea10cae-2060-4581-bfc1-15a03e016c95" mode="Transparent" x="245" y="0" width="47" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Math]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cb10aa93-75ad-47a0-98a8-1922060723c3" mode="Transparent" x="356" y="0" width="77" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Social Studies]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="abcb36e8-b12a-48f6-ab89-b7d001332078" x="511" y="0" width="44" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Pos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5da643d5-1d90-4348-9592-eb991a5f27c0" mode="Transparent" x="161" y="0" width="44" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Eng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fcfd362e-07fc-4551-af3e-11264553950c" x="47" y="0" width="114" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a93a1bf9-b7cd-4092-b229-4aae7a085ef0" mode="Transparent" x="245" y="0" width="47" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score_math}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a1f8c70c-edfe-41a1-ba13-e2560716d5a2" x="0" y="0" width="47" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentnumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5f06b062-758a-4188-8a4e-fa5e4caa8e3c" mode="Transparent" x="292" y="0" width="64" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score_science}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="325e2f7c-d47c-4f63-b450-2c0604b46a55" mode="Transparent" x="356" y="0" width="77" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score_socialstudies}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c6de79cf-561e-4fa5-81c8-48498404d44a" x="511" y="0" width="44" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="413eefe5-8c81-4029-8842-900e6b3473ad" mode="Transparent" x="161" y="0" width="44" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score_eng}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f5a7680d-693d-4fa7-8393-968e411e9422" x="433" y="0" width="78" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{score_math}==null?0:$F{score_math})+($F{score_kiswa}==null?0:$F{score_kiswa})+($F{score_eng}==null?0:$F{score_eng})+($F{score_science}==null?0:$F{score_science})+($F{score_socialstudies}==null?0:$F{score_socialstudies})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="caa869be-2e2e-4964-be53-418488c373cb" mode="Transparent" x="205" y="0" width="40" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{score_kiswa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d7407d11-bd00-49a2-be16-5ac8c5deb76b" x="47" y="0" width="114" height="20"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

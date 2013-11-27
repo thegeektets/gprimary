@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="classanalyse_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dbe517a4-008d-41ca-bf2a-185bd97b4351">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="score" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     exam.`examtype` AS exam_examtype,
+     exam.`class` AS exam_class,
+     exam.`stream` AS exam_stream,
+     exam.`term` AS exam_term,
+     exam.`yearofadm` AS exam_yearofadm,
+     exam.`examno` AS exam_examno,
+     exam.`entry` AS exam_entry,
+     student.`studentnumber` AS student_studentnumber,
+     student.`studentname` AS student_studentname,
+     student.`cclass` AS student_cclass,
+     score.`admno` AS score_admno,
+     score.`examno` AS score_examno,
+     score.`math` AS score_math,
+     score.`insha` AS score_insha,
+     score.`lugha` AS score_lugha,
+     score.`kiswa` AS score_kiswa,
+     score.`comp` AS score_comp,
+     score.`grammer` AS score_grammer,
+     score.`eng` AS score_eng,
+     MAX(score.`eng`) AS maxscore_eng,
+     score.`science` AS score_science,
+     score.`re` AS score_re,
+     score.`social` AS score_social,
+     score.`socialstudies` AS score_socialstudies,
+     student.`stream` AS student_stream
+FROM
+     `student` student INNER JOIN `exam` exam ON student.`studentnumber` = exam.`examno`
+     AND student.`cclass` = exam.`class`
+     AND student.`stream` = exam.`stream`
+     INNER JOIN `score` score ON exam.`examno` = score.`examno`
+WHERE
+     score.`eng` = $P{score}]]>
+	</queryString>
+	<field name="exam_examtype" class="java.lang.String"/>
+	<field name="exam_class" class="java.lang.Integer"/>
+	<field name="exam_stream" class="java.lang.String"/>
+	<field name="exam_term" class="java.lang.Integer"/>
+	<field name="exam_yearofadm" class="java.lang.Integer"/>
+	<field name="exam_examno" class="java.lang.String"/>
+	<field name="exam_entry" class="java.lang.Integer"/>
+	<field name="student_studentnumber" class="java.lang.Integer"/>
+	<field name="student_studentname" class="java.lang.String"/>
+	<field name="student_cclass" class="java.lang.Integer"/>
+	<field name="score_admno" class="java.lang.Integer"/>
+	<field name="score_examno" class="java.lang.String"/>
+	<field name="score_math" class="java.lang.Integer"/>
+	<field name="score_insha" class="java.lang.Integer"/>
+	<field name="score_lugha" class="java.lang.Integer"/>
+	<field name="score_kiswa" class="java.lang.Integer"/>
+	<field name="score_comp" class="java.lang.Integer"/>
+	<field name="score_grammer" class="java.lang.Integer"/>
+	<field name="score_eng" class="java.lang.Integer"/>
+	<field name="maxscore_eng" class="java.lang.Integer"/>
+	<field name="score_science" class="java.lang.Integer"/>
+	<field name="score_re" class="java.lang.Integer"/>
+	<field name="score_social" class="java.lang.Integer"/>
+	<field name="score_socialstudies" class="java.lang.Integer"/>
+	<field name="student_stream" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ae0ab913-a10d-421a-881a-d0da4da65498" x="189" y="17" width="127" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="classlist" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0a008703-4125-4239-b327-217c98d80f8f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="class" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="stream" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="term" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     student.`studentnumber` AS student_studentnumber,
+     student.`studentname` AS student_studentname,
+     student.`sex` AS student_sex,
+     student.`stream` AS student_stream,
+     student.`House` AS student_House,
+     student.`DOA` AS student_DOA,
+     student.`Class` AS student_Class,
+     student.`ParentsId` AS student_ParentsId,
+     student.`Bcertnumber` AS student_Bcertnumber,
+     student.`spic` AS student_spic,
+     student.`sport` AS student_sport,
+     student.`kcpe` AS student_kcpe,
+     student.`club` AS student_club,
+     student.`society` AS student_society,
+     student.`family` AS student_family,
+     student.`cclass` AS student_cclass,
+     student.`religion` AS student_religion,
+     student.`dob` AS student_dob,
+     school.`sname` AS school_sname,
+     school.`scpic` AS school_scpic,
+     school.`address` AS school_address,
+     school.`location` AS school_location,
+    sum( feesinstallments.`amount`) AS feesinstallments_amount,
+     feesinstallments.`date` AS feesinstallments_date,
+     feesinstallments.`key` AS feesinstallments_key,
+     feesinstallments.`paymentoption` AS feesinstallments_paymentoption,
+     feesinstallments.`payedby` AS feesinstallments_payedby,
+     feesinstallments.`transactionid` AS feesinstallments_transactionid,
+     feesinstallments.`recievedby` AS feesinstallments_recievedby,
+     feespayment.`key` AS feespayment_key,
+     feespayment.`year` AS feespayment_year,
+     feespayment.`term` AS feespayment_term,
+     feespayment.`studentadm` AS feespayment_studentadm,
+     feespayment.`newbalance` AS feespayment_newbalance,
+     feesstructure.`key` AS feesstructure_key,
+     feesstructure.`year` AS feesstructure_year,
+     feesstructure.`term` AS feesstructure_term,
+     feesstructure.`total` AS feesstructure_total,
+     feesstructure.`class` AS feesstructure_class
+FROM
+     `feesinstallments` feesinstallments INNER JOIN `feespayment` feespayment ON feesinstallments.`key` = feespayment.`key`
+     INNER JOIN `student` student ON feespayment.`studentadm` = student.`studentnumber`
+     INNER JOIN `feesstructure` feesstructure ON feespayment.`year` = feesstructure.`year`
+     AND feespayment.`term` = feesstructure.`term`
+     AND student.`cclass` = feesstructure.`class`,
+     `school` school
+WHERE
+     student.`cclass` = $P{class}
+     and student.`stream` = $P{stream}
+and feespayment.`term` =$P{term}
+and feespayment.`year` =$P{year}
+group by
+     student.`studentnumber`
+order by
+     student.`studentnumber`
+]]>
+	</queryString>
+	<field name="student_studentnumber" class="java.lang.Integer"/>
+	<field name="student_studentname" class="java.lang.String"/>
+	<field name="student_sex" class="java.lang.String"/>
+	<field name="student_stream" class="java.lang.String"/>
+	<field name="student_House" class="java.lang.String"/>
+	<field name="student_DOA" class="java.sql.Date"/>
+	<field name="student_Class" class="java.lang.Long"/>
+	<field name="student_ParentsId" class="java.lang.Integer"/>
+	<field name="student_Bcertnumber" class="java.lang.Integer"/>
+	<field name="student_spic" class="java.lang.String"/>
+	<field name="student_sport" class="java.lang.String"/>
+	<field name="student_kcpe" class="java.lang.String"/>
+	<field name="student_club" class="java.lang.String"/>
+	<field name="student_society" class="java.lang.String"/>
+	<field name="student_family" class="java.lang.String"/>
+	<field name="student_cclass" class="java.lang.Integer"/>
+	<field name="student_religion" class="java.lang.String"/>
+	<field name="student_dob" class="java.sql.Date"/>
+	<field name="school_sname" class="java.lang.String"/>
+	<field name="school_scpic" class="java.lang.String"/>
+	<field name="school_address" class="java.lang.String"/>
+	<field name="school_location" class="java.lang.String"/>
+	<field name="feesinstallments_amount" class="java.math.BigDecimal"/>
+	<field name="feesinstallments_date" class="java.sql.Date"/>
+	<field name="feesinstallments_key" class="java.lang.String"/>
+	<field name="feesinstallments_paymentoption" class="java.lang.String"/>
+	<field name="feesinstallments_payedby" class="java.lang.String"/>
+	<field name="feesinstallments_transactionid" class="java.lang.String"/>
+	<field name="feesinstallments_recievedby" class="java.lang.String"/>
+	<field name="feespayment_key" class="java.lang.String"/>
+	<field name="feespayment_year" class="java.lang.Integer"/>
+	<field name="feespayment_term" class="java.lang.Integer"/>
+	<field name="feespayment_studentadm" class="java.lang.Integer"/>
+	<field name="feespayment_newbalance" class="java.lang.Integer"/>
+	<field name="feesstructure_key" class="java.lang.String"/>
+	<field name="feesstructure_year" class="java.lang.Integer"/>
+	<field name="feesstructure_term" class="java.lang.Integer"/>
+	<field name="feesstructure_total" class="java.lang.Integer"/>
+	<field name="feesstructure_class" class="java.lang.Integer"/>
+	<variable name="feesinstallments_amount_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{feesinstallments_amount}]]></variableExpression>
+	</variable>
+	<variable name="feespayment_newbalance_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{feespayment_newbalance}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement uuid="26270221-0949-46ad-bffb-648a0bd2918b" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_sname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="701aab74-4936-4e79-8040-f5365d7effe0" x="0" y="20" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fees Payment Report For Form "+$F{student_cclass}+" "+$F{student_stream}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="e86d2efe-1d96-484e-89c0-aa2f0205c8f9" x="455" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="019e17e5-4831-4de7-b466-63a6c48879b6" x="47" y="18" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Admission No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="77fa5e9c-75b6-433e-b0e3-829772274d2c" x="147" y="18" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cf2648b5-f746-4b8a-8f3b-0601c0148625" x="247" y="18" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Class]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bb9dee1c-7a57-48b1-a524-14b5aa2f2033" x="347" y="18" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Amount Paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3a0f5275-ce2a-4a29-aabf-21408095edc6" x="0" y="18" width="47" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[NO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da86dc8d-2f17-4e23-a867-46dfdcb9e165" x="447" y="18" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4b518a47-a264-4b18-b523-b384e48ad83d" x="47" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="be3f2410-b74a-43dc-844a-2cb288841807" x="147" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4195a919-ea7c-4459-8de4-516721342950" x="247" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_cclass}+" "+$F{student_stream}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6eee6b23-6f6f-4e37-af53-94193b9488dc" x="347" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="34fdced0-7903-40c6-805c-9cf9c9210b37" x="0" y="0" width="47" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5582a31c-d930-4a8e-b799-c8f8a0e95140" x="447" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feespayment_newbalance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement uuid="edbaf63d-b12a-40e4-a04c-7fa87e74d8e0" x="170" y="1" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesstructure_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="111d51ef-24a1-41b8-8839-b1b931bac0cd" x="0" y="1" width="170" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount Expected Per Student:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8e3ad21f-d12e-4af9-896e-5a073a7ed191" x="347" y="1" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{feesinstallments_amount_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b41feaf0-bbe3-4e5a-ae67-6ec7289c2522" x="270" y="1" width="77" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Totals :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="03138f28-0d45-46d6-b985-2ac7c6223bd0" x="447" y="1" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{feespayment_newbalance_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paymentreciept" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="126519b4-531b-485b-a6f2-b88ba3d5ae13">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="transaction" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     student.`studentnumber` AS student_studentnumber,
+     student.`studentname` AS student_studentname,
+     student.`cclass` AS student_cclass,
+     student.`stream` AS student_stream,
+     feespayment.`key` AS feespayment_key,
+     feespayment.`year` AS feespayment_year,
+     feespayment.`term` AS feespayment_term,
+     feespayment.`studentadm` AS feespayment_studentadm,
+     feespayment.`newbalance` AS feespayment_newbalance,
+     school.`sname` AS school_sname,
+     school.`scpic` AS school_scpic,
+     school.`address` AS school_address,
+     school.`location` AS school_location,
+     feesinstallments.`amount` AS feesinstallments_amount,
+     feesinstallments.`date` AS feesinstallments_date,
+     feesinstallments.`key` AS feesinstallments_key,
+     feesinstallments.`paymentoption` AS feesinstallments_paymentoption,
+     feesinstallments.`payedby` AS feesinstallments_payedby,
+     feesinstallments.`transactionid` AS feesinstallments_transactionid,
+     feesinstallments.`recievedby` AS feesinstallments_recievedby,
+     installmentbreakdown.`amount` AS installmentbreakdown_amount,
+     installmentbreakdown.`item` AS installmentbreakdown_item,
+     installmentbreakdown.`transactionid` AS installmentbreakdown_transactionid,
+     installmentbreakdown.`key` AS installmentbreakdown_key
+FROM
+     `feespayment` feespayment INNER JOIN `student` student ON feespayment.`studentadm` = student.`studentnumber`
+     INNER JOIN `feesinstallments` feesinstallments ON feespayment.`key` = feesinstallments.`key`
+     INNER JOIN `installmentbreakdown` installmentbreakdown ON feesinstallments.`key` = installmentbreakdown.`key`
+     AND installmentbreakdown.`transactionid` = feesinstallments.`transactionid`,
+     `school` school
+WHERE
+     feespayment.`key` = $P{key}
+     and feesinstallments.`date` = $P{date}
+and feesinstallments.`transactionid`=$P{transaction}]]>
+	</queryString>
+	<field name="student_studentnumber" class="java.lang.Integer"/>
+	<field name="student_studentname" class="java.lang.String"/>
+	<field name="student_cclass" class="java.lang.Integer"/>
+	<field name="student_stream" class="java.lang.String"/>
+	<field name="feespayment_key" class="java.lang.String"/>
+	<field name="feespayment_year" class="java.lang.Integer"/>
+	<field name="feespayment_term" class="java.lang.Integer"/>
+	<field name="feespayment_studentadm" class="java.lang.Integer"/>
+	<field name="feespayment_newbalance" class="java.lang.Integer"/>
+	<field name="school_sname" class="java.lang.String"/>
+	<field name="school_scpic" class="java.lang.String"/>
+	<field name="school_address" class="java.lang.String"/>
+	<field name="school_location" class="java.lang.String"/>
+	<field name="feesinstallments_amount" class="java.lang.Integer"/>
+	<field name="feesinstallments_date" class="java.sql.Date"/>
+	<field name="feesinstallments_key" class="java.lang.String"/>
+	<field name="feesinstallments_paymentoption" class="java.lang.String"/>
+	<field name="feesinstallments_payedby" class="java.lang.String"/>
+	<field name="feesinstallments_transactionid" class="java.lang.String"/>
+	<field name="feesinstallments_recievedby" class="java.lang.String"/>
+	<field name="installmentbreakdown_amount" class="java.lang.Integer"/>
+	<field name="installmentbreakdown_item" class="java.lang.String"/>
+	<field name="installmentbreakdown_transactionid" class="java.lang.String"/>
+	<field name="installmentbreakdown_key" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="1b58a622-2259-43d1-87df-3d3ed2a80826" x="455" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Comic Sans MS"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement uuid="01500b75-d3fe-40c1-93fe-68deb1b4a024" x="0" y="0" width="112" height="95"/>
+				<image>
+					<reportElement uuid="113e5b8d-d45e-483e-9cd2-668e2ed61eb5" x="0" y="0" width="112" height="95"/>
+					<imageExpression><![CDATA[$F{school_scpic}]]></imageExpression>
+				</image>
+			</frame>
+			<textField>
+				<reportElement uuid="ba5112e9-f9cf-4e2f-99d2-e2931bc78bda" x="112" y="20" width="443" height="31"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="15" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_sname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1c8cf8af-138c-4a34-84f6-1cc8666af514" x="112" y="51" width="443" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d990ada2-6905-44db-9096-e7d98323623e" x="112" y="71" width="443" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{school_location}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bf1e28b6-b788-4ddc-a86b-299f4c03d010" x="112" y="0" width="343" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Fees Payment Receipt]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="157" splitType="Stretch">
+			<textField>
+				<reportElement uuid="75567f0a-b2cd-4e93-9d0c-d47b2c958015" x="112" y="0" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1f8753cb-8917-4e1b-a1a0-4c3625ca8e22" x="112" y="31" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7db05dff-8b89-4d7d-a336-9a03a1e54e28" x="367" y="0" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_cclass}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a0f7ceaa-db9c-43d9-8c3f-ce1e1c785119" x="367" y="31" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_stream}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05dd33ca-f722-447c-9226-986f9e7c5e3d" x="112" y="64" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feespayment_year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="24de500c-921c-428b-bf67-99bc0746ba2a" x="367" y="64" width="100" height="20"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feespayment_term}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="43c37bd0-c74e-46cf-846f-ce3df7a3b92a" x="0" y="0" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Adm Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c12b4dd8-e3da-422e-bb35-93b56d44e9dc" x="0" y="31" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Student Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="df54ba1d-af57-4104-b5a0-f3696625ac48" x="0" y="64" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="91db0019-b46a-44cc-bafa-d2361fb07e27" x="237" y="0" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Class]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b4b912e6-a279-48df-a6d4-d50af5598cfd" x="237" y="31" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Stream]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7799a100-daa0-47d2-a29e-7f5666d79d88" x="237" y="64" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Term]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d7ed8f78-e243-48c8-b6c6-0bbc4c65f4ba" x="367" y="135" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feespayment_newbalance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="72ecb2c5-cc6c-45cb-8b9e-776e8427d65c" x="237" y="135" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[New Balance]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ef091f66-3c10-4225-bb3e-f92e7530e9d8" x="112" y="95" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_amount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="05fac73f-8bce-4f33-8273-26f254a4d10c" x="0" y="95" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Amount Paid]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e2c8522f-bb05-40d8-b31b-05e61b3a884c" x="112" y="114" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_paymentoption}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dc2997cf-4e35-408f-8fe1-16c970b31814" x="0" y="114" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Payment Mode]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="90890c0d-0738-4c46-8b6f-59e7599b36f9" x="112" y="133" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_transactionid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="70fc4169-3ca3-4a49-835c-2aa9095869f2" x="0" y="133" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Transaction Id]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b1fd1e75-3a8c-418b-a7b7-b3b2ee0bbcc2" x="367" y="95" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_recievedby}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="15715450-56dd-4566-886b-776cd2fa6acc" x="237" y="95" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Recieved By]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="382c77da-c3d6-46ec-97ea-412e9b46ee5e" x="367" y="115" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesinstallments_payedby}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b93d4c9b-2c53-4aa0-88ff-f5b80b9f2911" x="237" y="115" width="100" height="20"/>
+				<box rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Payed By]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement uuid="274139b4-3826-49db-b091-f1952019bcf6" x="0" y="1" width="212" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installmentbreakdown_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5466e1c0-4245-4329-a12d-bc2b90f07d70" x="237" y="1" width="230" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{installmentbreakdown_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

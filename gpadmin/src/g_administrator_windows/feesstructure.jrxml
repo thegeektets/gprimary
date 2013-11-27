@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="feesstructure" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c6ebfd80-0075-40de-a998-c9449cec2d00">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="a2b7cb66-a2ef-4864-9871-ac556d095891">
+		<queryString>
+			<![CDATA[SELECT
+     feesdescription.`amount` AS feesdescription_amount,
+     feesdescription.`item` AS feesdescription_item,
+     feesdescription.`key` AS feesdescription_key,
+     feesdescription.`class` AS feesdescription_class,
+     feesstructure.`key` AS feesstructure_key
+FROM
+     `feesdescription` feesdescription INNER JOIN `feesstructure` feesstructure ON feesdescription.`key` = feesstructure.`key`]]>
+		</queryString>
+		<field name="feesdescription_amount" class="java.lang.Integer"/>
+		<field name="feesdescription_item" class="java.lang.String"/>
+		<field name="feesdescription_key" class="java.lang.String"/>
+		<field name="feesdescription_class" class="java.lang.Integer"/>
+		<field name="feesstructure_key" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     feesdescription.`amount` AS feesdescription_amount,
+     feesdescription.`item` AS feesdescription_item,
+     feesdescription.`key` AS feesdescription_key,
+     feesdescription.`class` AS feesdescription_class,
+     feesstructure.`key` AS feesstructure_key,
+     feesstructure.`year` AS feesstructure_year,
+     feesstructure.`term` AS feesstructure_term,
+     feesstructure.`total` AS feesstructure_total,
+     feesstructure.`class` AS feesstructure_class
+FROM
+     `feesdescription` feesdescription INNER JOIN `feesstructure` feesstructure ON feesdescription.`key` = feesstructure.`key`
+where
+feesstructure.`key`=$P{key}]]>
+	</queryString>
+	<field name="feesdescription_amount" class="java.lang.Integer"/>
+	<field name="feesdescription_item" class="java.lang.String"/>
+	<field name="feesdescription_key" class="java.lang.String"/>
+	<field name="feesdescription_class" class="java.lang.Integer"/>
+	<field name="feesstructure_key" class="java.lang.String"/>
+	<field name="feesstructure_year" class="java.lang.Integer"/>
+	<field name="feesstructure_term" class="java.lang.Integer"/>
+	<field name="feesstructure_total" class="java.lang.Integer"/>
+	<field name="feesstructure_class" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b8feb9bf-2521-444e-b7d6-13dda7752741" x="0" y="0" width="555" height="24"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["School Fees Structure for Term "+$F{feesstructure_term}+" "+$F{feesstructure_year}+" Class "+$F{feesstructure_class}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="239da62b-bebd-4213-82f0-3b74b7b65c0d" x="432" y="0" width="123" height="22"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="139" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8e5facc9-fbb0-4fb8-9b5f-74c8f9c8a8ef" x="152" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesstructure_year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1e562257-42a6-479a-a083-5e1daf7a80ca" x="152" y="32" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesstructure_class}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0cc4cabf-9a49-4a08-9d57-162ea8d04c97" x="152" y="64" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesstructure_term}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd6f9db5-29b0-4d5a-bec5-69ca54e9192b" x="152" y="94" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesstructure_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="81ec9303-2e12-462e-8c27-8846e770045d" x="0" y="94" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Fees]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b3c6f2eb-d0e5-4571-83b0-0f42f107ac57" x="0" y="64" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f9d542f-1321-48e2-8302-04595bf400f3" x="0" y="32" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="265b25fe-6f7f-44d6-8337-501cfeb79609" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eac975f7-6ecf-453e-9a1e-722b4400cac6" x="0" y="119" width="295" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fees Breakdown]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a69b6f4f-77e6-4004-937f-d25b205d9573" x="0" y="0" width="135" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesdescription_item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e56d00ed-71c0-4540-bbb0-415da77c84cd" x="152" y="0" width="143" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{feesdescription_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
